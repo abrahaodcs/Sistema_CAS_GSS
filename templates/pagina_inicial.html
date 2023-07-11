@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Página Inicial</title>
+    <style>
+        body {
+            background-color: #333;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 2px;
+        }
+        .logo img {
+            width: 410px;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 7cm;
+            background-color: #002147;
+            font-size: 13px;
+            padding: 8px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .sidebar a {
+            display: block;
+            width: 100%;
+            padding: 8px 4px;
+            margin-bottom: 4px;
+            color: white;
+            background-color: #002147;
+            border: none;
+            text-align: left;
+            font-size: 15px;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #003d79;
+            cursor: pointer;
+        }
+        .content {
+            margin-left: 8cm;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .dialog-box {
+            margin: 0 auto;
+            background-color: #4682B4;
+            color: white;
+            font-size: 18px;
+            padding: 60px;
+            text-align: center;
+            width: 400px;
+        }
+        .dialog-title {
+            font-size: 18px;
+            color: white;
+            font-weight: bold;
+        }
+        .user-info {
+            text-align: left;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        .user-info strong {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .user-info p {
+            margin: 5px 0;
+        }
+        .logout {
+            position: fixed;
+            bottom: 60px;
+            left: 8px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+    <div class="sidebar">
+        <a href="{{ url_for('usuarios.usuarios_page') }}">Usuários</a>
+        <a href="#">Relatórios</a>
+        <a href="{{ url_for('calculadora_cancelamento.calcular_cancelamento_contrato') }}">Calcular Cancelamento</a>
+        <a href="{{ url_for('caixa.caixa') }}">Caixa</a>
+        <a href="{{ url_for('metas_bonificacoes.metas_bonificacoes') }}">Metas e Bonificações</a>
+        <a href="#">RH</a>
+        <a href="#">Incentivos</a>
+        <a href="#">Mensagens</a>
+        <a href="#">Eventos</a>
+    </div>
+    <div class="content">
+        {% if usuario %}
+        <div class="dialog-box">
+            <div class="dialog-title">Seja bem-vindo ao Sistema CAS Grupo Skin Soft</div>
+            <div class="user-info">
+                <p><strong>Nome:</strong> {{ usuario.Nome }}</p>
+                <p><strong>Cargo:</strong> {{ usuario.Cargo }}</p>
+                <p><strong>Nível Organizacional:</strong> {{ usuario.NivelOrganizacional }}</p>
+                <p><strong>E-mail:</strong> {{ usuario.Email }}</p>
+                <p><strong>Celular:</strong> {{ usuario.Celular }}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="dialog-box">
+            <div class="dialog-title">Seja bem-vindo ao Sistema CAS Grupo Skin Soft</div>
+            <div class="user-info">
+                <p>Usuário não encontrado</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="logout">
+        <a onclick="logout()">Sair</a>
+    </div>
+
+    <script>
+        function logout() {
+            window.location.href = '/logout';
+        }
+    </script>
+</body>
+</html>

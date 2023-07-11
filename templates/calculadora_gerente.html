@@ -1,0 +1,177 @@
+<!-- calculadora_gerente.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora - Gerente</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Calculadora - Gerente</h1>
+    <form method="POST" action="{{ url_for('calculadora_gerente.calculadora_gerente') }}">
+        <h2>Loja</h2>
+        <label for="meta_loja_dezena_1">Meta de Vendas - Dezena 1:</label>
+        <input type="number" id="meta_loja_dezena_1" name="meta_loja_dezena_1" step="0.01" required>
+        <br>
+        <label for="venda_loja_dezena_1">Venda - Dezena 1:</label>
+        <input type="number" id="venda_loja_dezena_1" name="venda_loja_dezena_1" step="0.01" required>
+        <br>
+        <label for="meta_loja_dezena_2">Meta de Vendas - Dezena 2:</label>
+        <input type="number" id="meta_loja_dezena_2" name="meta_loja_dezena_2" step="0.01" required>
+        <br>
+        <label for="venda_loja_dezena_2">Venda - Dezena 2:</label>
+        <input type="number" id="venda_loja_dezena_2" name="venda_loja_dezena_2" step="0.01" required>
+        <br>
+        <label for="meta_loja_dezena_3">Meta de Vendas - Dezena 3:</label>
+        <input type="number" id="meta_loja_dezena_3" name="meta_loja_dezena_3" step="0.01" required>
+        <br>
+        <label for="venda_loja_dezena_3">Venda - Dezena 3:</label>
+        <input type="number" id="venda_loja_dezena_3" name="venda_loja_dezena_3" step="0.01" required>
+        <br>
+        <h2>Individual</h2>
+        <label for="meta_individual_dezena_1">Meta de Vendas - Dezena 1:</label>
+        <input type="number" id="meta_individual_dezena_1" name="meta_individual_dezena_1" step="0.01" required>
+        <br>
+        <label for="venda_individual_dezena_1">Venda - Dezena 1:</label>
+        <input type="number" id="venda_individual_dezena_1" name="venda_individual_dezena_1" step="0.01" required>
+        <br>
+        <label for="meta_individual_dezena_2">Meta de Vendas - Dezena 2:</label>
+        <input type="number" id="meta_individual_dezena_2" name="meta_individual_dezena_2" step="0.01" required>
+        <br>
+        <label for="venda_individual_dezena_2">Venda - Dezena 2:</label>
+        <input type="number" id="venda_individual_dezena_2" name="venda_individual_dezena_2" step="0.01" required>
+        <br>
+        <label for="meta_individual_dezena_3">Meta de Vendas - Dezena 3:</label>
+        <input type="number" id="meta_individual_dezena_3" name="meta_individual_dezena_3" step="0.01" required>
+        <br>
+        <label for="venda_individual_dezena_3">Venda - Dezena 3:</label>
+        <input type="number" id="venda_individual_dezena_3" name="venda_individual_dezena_3" step="0.01" required>
+        <br>
+        <h2>NPS</h2>
+        <label for="nps">NPS:</label>
+        <input type="number" id="nps" name="nps" required>
+        <br>
+        <br>
+        <button type="submit">Calcular</button>
+    </form>
+    {% if request.method == 'POST' %}
+        <h2>Resultados</h2>
+        <table>
+            <tr>
+                <th>Loja</th>
+                <th>Meta Mensal</th>
+                <th>Venda Mensal</th>
+                <th>Percentual da Meta</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>Dezena 1</td>
+                <td>{{ meta_loja_dezena_1 }}</td>
+                <td>{{ venda_loja_dezena_1 }}</td>
+                <td>{{ percentual_meta_mes_loja }}%</td>
+                <td>{{ status_loja_dezena_1 }}</td>
+            </tr>
+            <tr>
+                <td>Dezena 2</td>
+                <td>{{ meta_loja_dezena_2 }}</td>
+                <td>{{ venda_loja_dezena_2 }}</td>
+                <td>{{ percentual_meta_mes_loja }}%</td>
+                <td>{{ status_loja_dezena_2 }}</td>
+            </tr>
+            <tr>
+                <td>Dezena 3</td>
+                <td>{{ meta_loja_dezena_3 }}</td>
+                <td>{{ venda_loja_dezena_3 }}</td>
+                <td>{{ percentual_meta_mes_loja }}%</td>
+                <td>{{ status_loja_dezena_3 }}</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <th>Individual</th>
+                <th>Meta Mensal</th>
+                <th>Venda Mensal</th>
+                <th>Percentual da Meta</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>Dezena 1</td>
+                <td>{{ meta_individual_dezena_1 }}</td>
+                <td>{{ venda_individual_dezena_1 }}</td>
+                <td>{{ percentual_meta_mes_individual }}%</td>
+                <td>{{ status_individual_dezena_1 }}</td>
+            </tr>
+            <tr>
+                <td>Dezena 2</td>
+                <td>{{ meta_individual_dezena_2 }}</td>
+                <td>{{ venda_individual_dezena_2 }}</td>
+                <td>{{ percentual_meta_mes_individual }}%</td>
+                <td>{{ status_individual_dezena_2 }}</td>
+            </tr>
+            <tr>
+                <td>Dezena 3</td>
+                <td>{{ meta_individual_dezena_3 }}</td>
+                <td>{{ venda_individual_dezena_3 }}</td>
+                <td>{{ percentual_meta_mes_individual }}%</td>
+                <td>{{ status_individual_dezena_3 }}</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <th>Total</th>
+                <th>Meta Mensal</th>
+                <th>Venda Mensal</th>
+                <th>Percentual da Meta</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>Loja</td>
+                <td>{{ meta_mes_loja }}</td>
+                <td>{{ venda_mes_loja }}</td>
+                <td>{{ percentual_meta_mes_loja }}%</td>
+                <td>{{ status_loja_mes }}</td>
+            </tr>
+            <tr>
+                <td>Individual</td>
+                <td>{{ meta_mes_individual }}</td>
+                <td>{{ venda_mes_individual }}</td>
+                <td>{{ percentual_meta_mes_individual }}%</td>
+                <td>{{ status_individual_mes }}</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <th>RV</th>
+                <th>Dezena 1</th>
+                <th>Dezena 2</th>
+                <th>Dezena 3</th>
+                <th>NPS</th>
+                <th>RV sem Acelerador</th>
+                <th>Total RV</th>
+            </tr>
+            <tr>
+                <td>Loja</td>
+                <td>{{ rv_dezena_loja_1 }}</td>
+                <td>{{ rv_dezena_loja_2 }}</td>
+                <td>{{ rv_dezena_loja_3 }}</td>
+                <td>{{ rv_nps }}</td>
+                <td>{{ rv_sem_acelerador }}</td>
+                <td>{{ total_rv }}</td>
+            </tr>
+            <tr>
+                <td>Individual</td>
+                <td>{{ rv_dezena_individual_1 }}</td>
+                <td>{{ rv_dezena_individual_2 }}</td>
+                <td>{{ rv_dezena_individual_3 }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    {% endif %}
+</body>
+</html>

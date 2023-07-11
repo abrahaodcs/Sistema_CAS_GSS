@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site em Manutenção</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+    <h1>Site em Manutenção</h1>
+    <p>Lamentamos pelo inconveniente, mas estamos fazendo algumas atualizações no nosso site. Por favor, volte em breve.</p>
+    <p class="contact-info">Para mais informações, entre em contato conosco pelo telefone (64) 99329-6561 ou pelo email info@cas_gss.com.br</p>
+</body>
+</html>

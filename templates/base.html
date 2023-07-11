@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Seu Sistema</title>
+    <style>
+        body {
+            background-color: #e7e0e6;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #02407a;
+            color: white;
+            padding: 10px;
+            text-align: right;
+        }
+        nav {
+            background-color: #02407a;
+            color: white;
+            width: 200px;
+            font-size: 13px;
+            padding: 10px;
+            float: left;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav li {
+            margin-bottom: 5px;
+        }
+        main {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        footer {
+            background-color: #02407a;
+            color: white;
+            padding: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <img src="logo.png" alt="Logo">
+            <span>Nome do usuário logado</span>
+            <a href="logout.py">Sair</a>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li>Usuários
+                <ul>
+                    <li><a href="adicionar_usuario.py">Adicionar usuários</a></li>
+                    <li><a href="buscar_usuarios.py">Buscar usuários</a></li>
+                    <li><a href="editar_usuarios.py">Editar usuários</a></li>
+                    <li><a href="editar_informacoes.py">Editar informações</a></li>
+                </ul>
+            </li>
+            <li><a href="relatorios.py">Relatórios</a></li>
+            <li><a href="calculadora_cancelamento.py">Calculadora cancelamento</a></li>
+            <li><a href="caixa.py">Caixa</a></li>
+            <li>Metas e bonificações
+                <ul>
+                    <li><a href="metas_unidades.py">Meta unidades</a></li>
+                    <li><a href="metas_colaboradoras.py">Metas colaboradoras</a></li>
+                    <li><a href="calculadora_bonificacoes.py">Calculadora de bonificações</a></li>
+                    <li><a href="calculadora_unidade.py">Calculadora unidade</a></li>
+                    <li><a href="bonificacoes.py">Bonificações</a></li>
+                </ul>
+            </li>
+            <li><a href="rh.py">RH</a></li>
+            <li><a href="incentivos.py">Incentivos</a></li>
+            <li><a href="mensagens.py">Mensagens</a></li>
+            <li><a href="eventos.py">Eventos</a></li>
+        </ul>
+    </nav>
+    <main>
+        <!-- Aqui vai o conteúdo específico de cada página -->
+
+    </main>
+    <footer>
+        <span>Data e Hora</span>
+        <span>Versão do Sistema</span>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!-- metas_bonificacoes.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Metas e Bonificações</title>
+    <style>
+        body {
+            background-color: #444;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .logo img {
+            width: 280px;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 6cm;
+            background-color: #002147;
+            font-size: 13px;
+            padding: 8px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .sidebar button {
+            display: block;
+            width: 100%;
+            padding: 6px 12px;
+            margin-bottom: 4px;
+            color: white;
+            background-color: #002147;
+            border: none;
+            text-align: left;
+            font-size: 13px;
+        }
+        .sidebar button:hover {
+            background-color: #003d79;
+            cursor: pointer;
+        }
+        .content {
+            margin-left: 6cm;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .dialog-box {
+            margin: 0 auto;
+            background-color: #4682B4;
+            color: white;
+            font-size: 18px;
+            padding: 60px;
+            text-align: center;
+            width: 400px;
+        }
+        .dialog-title {
+            font-size: 18px;
+            color: white;
+            font-weight: bold;
+        }
+        .user-info {
+            text-align: left;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        .user-info strong {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .user-info p {
+            margin: 5px 0;
+        }
+        .logout {
+            position: fixed;
+            bottom: 60px;
+            left: 8px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+    <div class="sidebar">
+        {% if session.nivel_acesso == 'Administrador' %}
+            <a href="{{ url_for('metas_unidades.metas_unidades') }}"><button>Metas unidades</button></a>
+            <a href="#"><button>Metas colaboradoras</button></a>
+        {% endif %}
+        <button onclick="#">Calculadora de bonificações</button>
+        <button onclick="#">Bonificações</button>
+    </div>
+    <div class="content">
+        <div class="dialog-box">
+            <div class="dialog-title">Ao alcançarmos nossas metas, percebemos que o verdadeiro triunfo está na caminhada
+                conjunta, onde cada indivíduo é valorizado e contribui com seu potencial único. Pois, como afirmava
+                Paulo Freire, somente na colaboração solidária e no respeito mútuo é que construímos um futuro de
+                realizações coletivas.</div>
+        </div>
+    </div>
+    <div class="logout">
+        <a onclick="goBack()">Voltar</a>
+    </div>
+
+    <script>
+        function openPage(page) {
+            window.location.href = '/' + page;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

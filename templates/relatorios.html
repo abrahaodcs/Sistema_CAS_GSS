@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Relatórios de Cancelamento</h1>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">Contrato</th>
+                <th scope="col">Data de Geração</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for relatorio in relatorios %}
+            <tr>
+                <td>{{ relatorio.contrato }}</td>
+                <td>{{ relatorio.data_geracao.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                <td>
+                    <a href="{{ url_for('visualizar_relatorio', contrato=relatorio.contrato) }}" class="btn btn-primary">Visualizar</a>
+                    <a href="{{ url_for('download_relatorio', contrato=relatorio.contrato) }}" class="btn btn-secondary">Download</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

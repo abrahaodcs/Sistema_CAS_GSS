@@ -1,0 +1,57 @@
+<!-- calculadora_consultora.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora Consultora Avaliação</title>
+</head>
+<body>
+    <h1>Calculadora Consultora Avaliação</h1>
+    <form method="POST" action="/calculadora_consultora">
+        <h2>Loja</h2>
+        <label>Meta Dezena 1:</label>
+        <input type="number" name="meta_loja_dezena_1" step="0.01" required><br>
+        <label>Venda Dezena 1:</label>
+        <input type="number" name="venda_loja_dezena_1" step="0.01" required><br>
+        <label>Meta Dezena 2:</label>
+        <input type="number" name="meta_loja_dezena_2" step="0.01" required><br>
+        <label>Venda Dezena 2:</label>
+        <input type="number" name="venda_loja_dezena_2" step="0.01" required><br>
+        <label>Meta Dezena 3:</label>
+        <input type="number" name="meta_loja_dezena_3" step="0.01" required><br>
+        <label>Venda Dezena 3:</label>
+        <input type="number" name="venda_loja_dezena_3" step="0.01" required><br>
+
+        <h2>Individual</h2>
+        <label>Meta Dezena 1:</label>
+        <input type="number" name="meta_individual_dezena_1" step="0.01" required><br>
+        <label>Venda Dezena 1:</label>
+        <input type="number" name="venda_individual_dezena_1" step="0.01" required><br>
+        <label>Meta Dezena 2:</label>
+        <input type="number" name="meta_individual_dezena_2" step="0.01" required><br>
+        <label>Venda Dezena 2:</label>
+        <input type="number" name="venda_individual_dezena_2" step="0.01" required><br>
+        <label>Meta Dezena 3:</label>
+        <input type="number" name="meta_individual_dezena_3" step="0.01" required><br>
+        <label>Venda Dezena 3:</label>
+        <input type="number" name="venda_individual_dezena_3" step="0.01" required><br>
+
+        <input type="submit" value="Calcular">
+    </form>
+
+    {% if request.method == 'POST' %}
+        <h2>Resultados</h2>
+        <h3>Loja</h3>
+        <p>Percentual da Meta: {{ percentual_meta_loja }}%</p>
+        <p>Status Dezena 1: {{ status_loja_dezena_1 }}</p>
+        <p>Status Dezena 2: {{ status_loja_dezena_2 }}</p>
+        <p>Status Dezena 3: {{ status_loja_dezena_3 }}</p>
+
+        <h3>Individual</h3>
+        <p>Percentual da Meta: {{ percentual_meta_individual }}%</p>
+        <p>Status Dezena 1: {{ status_individual_dezena_1 }}</p>
+        <p>Status Dezena 2: {{ status_individual_dezena_2 }}</p>
+        <p>Status Dezena 3: {{ status_individual_dezena_3 }}</p>
+    {% endif %}
+</body>
+</html>

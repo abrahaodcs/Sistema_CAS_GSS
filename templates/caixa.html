@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Caixa</title>
+    <style>
+        body {
+            background-color: #444;
+            margin: 0;
+            padding: 0;
+        }
+        .logo {
+            text-align: left;
+            margin: 10px;
+        }
+        .logo img {
+            width: 250px;
+        }
+        .title {
+            text-align: center;
+            color: white;
+            font-size: 46px;
+            margin-top: 10px;
+        }
+        .dialog-box {
+            margin: 0 auto;
+            background-color: #4682B4;
+            color: white;
+            font-size: 40px;
+            padding: 20px;
+            text-align: center;
+            width: 600px;
+            margin-top: 20px;
+        }
+        .dialog-title {
+            font-size: 25px;
+            color: white;
+            font-weight: bold;
+        }
+        .form-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .form-container input[type="text"],
+        .form-container select {
+            width: 500px;
+            height: 30px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        .form-container input[type="date"] {
+            width: 240px;
+            height: 30px;
+            font-size: 20px;
+        }
+        .form-container button {
+            width: 240px;
+            height: 40px;
+            background-color: #002147;
+            color: white;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .form-container button:hover {
+            background-color: #003d79;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+    <div class="title">
+        Caixa
+    </div>
+    <div class="dialog-box">
+        <div class="dialog-title">Preencha todos os campos do formulário</div>
+        <div class="form-container">
+            <form action="{{ url_for('caixa.inserir_movimentacao') }}" method="POST">
+                <input type="text" name="data" placeholder="Data" value="{{ data_sistema }}" required><br>
+                <input type="text" name="unidade" placeholder="Unidade" value="{{ nivel_organizacional }}" required><br>
+                <input type="text" name="cpf" placeholder="CPF usuário" value="{{ cpf_usuario }}" required><br>
+                <input type="text" name="nome" placeholder="Nome" value="{{ nome_usuario }}" required><br>
+                <input type="date" name="data_movimentacao" placeholder="Data" required><br>
+                <select name="tipo_movimentacao" required>
+                    <option value="">Selecione a Movimentação</option>
+                    <option value="Venda">Venda</option>
+                    <option value="Regularização">Regularização</option>
+                </select><br>
+                <select name="forma_pagamento" required>
+                    <option value="">Selecione a Forma de Pagamento</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Débito">Débito</option>
+                    <option value="Crédito">Crédito</option>
+                    <option value="Recorrente">Recorrente</option>
+                    <option value="Outros">Outros</option>
+                </select><br>
+                <input type="text" name="valor" placeholder="Valor" required><br>
+                <input type="text" name="cliente" placeholder="Cliente" required><br>
+                <input type="text" name="contrato" placeholder="Contrato" required><br>
+                <input type="text" name="observacao" placeholder="Observação" required><br>
+                <button type="submit">Inserir</button>
+                <button onclick="gerarRelatorioDiario()">Relatório diário</button>
+                <button onclick="gerarRelatorioMensal()">Relatório mensal</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function gerarRelatorioDiario() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/caixa/gerar_relatorio_diario', true);
+            xhr.responseType = 'blob';
+
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    var blob = new Blob([this.response], {type: 'application/pdf'});
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'relatorio_diario.pdf';
+                    link.click();
+                }
+            };
+
+            xhr.send();
+        }
+
+        function gerarRelatorioMensal() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/caixa/gerar_relatorio_mensal', true);
+            xhr.responseType = 'blob';
+
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    var blob = new Blob([this.response], {type: 'application/pdf'});
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'relatorio_mensal.pdf';
+                    link.click();
+                }
+            };
+
+            xhr.send();
+        }
+    </script>
+
+</body>
+</html>

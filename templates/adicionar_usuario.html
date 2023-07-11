@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Usuário</title>
+    <style>
+        body {
+            background-color: #333;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .logo img {
+            width: 100px;
+        }
+        .title {
+            text-align: center;
+            font-size: 26px;
+            color: white;
+            margin-top: 50px;
+        }
+        .dialog-box {
+            margin: 0 auto;
+            background-color: #4682B4;
+            color: white;
+            font-size: 16px;
+            padding: 30px;
+            text-align: center;
+            width: 400px;
+            margin-top: 50px;
+        }
+        .dialog-title {
+            font-size: 18px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: inline-block;
+            width: 165px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .form-input {
+            width: 200px;
+        }
+        .form-row {
+            margin-bottom: 10px;
+        }
+        .form-row input[type="checkbox"] {
+            margin-left: 10px;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var exibirSenhaCheckbox = document.getElementById('exibir-senha');
+            var senhaProvisoriaInput = document.getElementById('senha-provisoria');
+            var senhaProvisoriaTexto = document.getElementById('senha-provisoria-texto');
+
+            exibirSenhaCheckbox.addEventListener('change', function() {
+                if (exibirSenhaCheckbox.checked) {
+                    senhaProvisoriaInput.style.display = 'none';
+                    senhaProvisoriaTexto.style.display = 'inline-block';
+                    senhaProvisoriaTexto.textContent = senhaProvisoriaInput.value;
+                } else {
+                    senhaProvisoriaInput.style.display = 'inline-block';
+                    senhaProvisoriaTexto.style.display = 'none';
+                }
+            });
+
+            senhaProvisoriaInput.addEventListener('input', function() {
+                if (exibirSenhaCheckbox.checked) {
+                    senhaProvisoriaTexto.textContent = senhaProvisoriaInput.value;
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+    <div class="title">
+        Adicionar Usuário
+    </div>
+    <div class="dialog-box">
+        <div class="dialog-title">Preencha todos os campos do formulário abaixo</div>
+        <form method="POST" action="{{ url_for('adicionar_usuario_bp.adicionar_usuario') }}">
+            <div class="form-row">
+                <label for="cpf" class="form-label">CPF:</label>
+                <input type="text" id="cpf" name="cpf" class="form-input" required>
+            </div>
+            <div class="form-row">
+                <label for="nivel-acesso" class="form-label">Nível de Acesso:</label>
+                <input type="text" id="nivel-acesso" name="nivel-acesso" class="form-input" required>
+            </div>
+            <div class="form-row">
+                <label for="nivel-organizacional" class="form-label">Nível Organizacional:</label>
+                <input type="text" id="nivel-organizacional" name="nivel-organizacional" class="form-input" required>
+            </div>
+            <div class="form-row">
+                <label for="cargo" class="form-label">Cargo:</label>
+                <input type="text" id="cargo" name="cargo" class="form-input" required>
+            </div>
+            <div class="form-row">
+                <input type="submit" value="Adicionar">
+                <a href="{{ url_for('pagina_inicial.pagina_inicial') }}" class="btn btn-secondary">Voltar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

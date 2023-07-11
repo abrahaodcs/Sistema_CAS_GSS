@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #e6f2ff;
+        }
+
+        .container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #002244;
+            border-radius: 5px;
+            text-align: center;
+            color: #fff;
+        }
+
+        h2 {
+            font-size: 18px;
+        }
+
+        label {
+            font-size: 13px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            height: 30px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="width: 100%;">
+        <h2>Por favor, identifique-se para acessar.</h2>
+        <form method="POST" action="/login">
+            <label for="cpf">Usuário:</label><br>
+            <input type="text" id="cpf" name="cpf" required><br>
+            <label for="senha">Senha:</label><br>
+            <input type="password" id="senha" name="senha" required><br>
+            <input type="checkbox" onclick="mostrarSenha()"> Mostrar senha<br>
+            <input type="submit" value="Acessar"><br>
+            <a href="/esqueci_senha">Esqueci minha senha</a>
+        </form>
+    </div>
+
+    <script>
+        function mostrarSenha() {
+            var senhaInput = document.getElementById("senha");
+            if (senhaInput.type === "password") {
+                senhaInput.type = "text";
+            } else {
+                senhaInput.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>

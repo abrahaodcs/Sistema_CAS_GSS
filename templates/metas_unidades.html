@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Metas das Unidades</title>
+    <style>
+        body {
+            background-color: #333;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #logo {
+            display: block;
+            margin: 0 auto;
+            width: 200px;
+        }
+
+        #title {
+            text-align: center;
+            font-size: 46px;
+            margin-top: 10px;
+            color: white;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .form-box {
+            background-color: steelblue;
+            padding: 20px;
+            color: white;
+        }
+
+        .form-box h2 {
+            color: white;
+        }
+
+        .form-box input[readonly], .form-box select[disabled] {
+            background-color: #333;
+            color: white;
+        }
+
+        .form-box input[type="submit"] {
+            background-color: #fff;
+            color: steelblue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img id="logo" src="/static/logo.png" alt="Logo">
+    <h1>Meta Unidade</h1>
+    <div class="form-container">
+        <div class="form-box">
+            <h2>Formulário 1</h2>
+            <form method="POST" action="/salvar_metas">
+                <label for="mes">Mês</label>
+                <input type="text" id="mes" name="mes" placeholder="dd/mm/aaaa" required><br><br>
+                <label for="unidade">Unidade</label>
+                <select id="unidade" name="unidade" required>
+                    {% for unidade in unidades %}
+                        <option value="{{ unidade }}">{{ unidade }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <label for="meta_mes">Meta mês</label>
+                <input type="number" id="meta_mes" name="meta_mes" required><br><br>
+                <input type="submit" value="Salvar Metas">
+            </form>
+        </div>
+        <div class="form-box">
+            <h2>Formulário 2</h2>
+            <form>
+                <label for="campo1">Nome dos campos</label>
+                <input type="text" id="campo1" name="campo1" value="01/05/2023" readonly><br><br>
+                <label for="campo2">Nome dos campos</label>
+                <input type="text" id="campo2" name="campo2" value="GO - FORMOSA - AVENIDA BRASILIA" readonly><br><br>
+                <label for="campo3">Nome dos campos</label>
+                <input type="text" id="campo3" name="campo3" value="R$ 175.000,00" readonly><br><br>
+                <label for="campo4">Nome dos campos</label>
+                <input type="text" id="campo4" name="campo4" value="R$ 210.000,00" readonly><br><br>
+                <label for="campo5">Nome dos campos</label>
+                <input type="text" id="campo5" name="campo5" value="R$ 252.000,00" readonly><br><br>
+                <label for="campo6">Nome dos campos</label>
+                <input type="text" id="campo6" name="campo6" value="R$ 58.333,33" readonly><br><br>
+                <label for="campo7">Nome dos campos</label>
+                <input type="text" id="campo7" name="campo7" value="R$ 70.000,00" readonly><br><br>
+                <label for="campo8">Nome dos campos</label>
+                <input type="text" id="campo8" name="campo8" value="R$ 84.000,00" readonly><br><br>
+                <label for="campo9">Nome dos campos</label>
+                <input type="text" id="campo9" name="campo9" value="R$ 58.333,33" readonly><br><br>
+                <label for="campo10">Nome dos campos</label>
+                <input type="text" id="campo10" name="campo10" value="R$ 70.000,00" readonly><br><br>
+                <label for="campo11">Nome dos campos</label>
+                <input type="text" id="campo11" name="campo11" value="R$ 84.000,00" readonly><br><br>
+                <label for="campo12">Nome dos campos</label>
+                <input type="text" id="campo12" name="campo12" value="R$ 58.333,33" readonly><br><br>
+                <label for="campo13">Nome dos campos</label>
+                <input type="text" id="campo13" name="campo13" value="R$ 70.000,00" readonly><br><br>
+                <label for="campo14">Nome dos campos</label>
+                <input type="text" id="campo14" name="campo14" value="R$ 84.000,00" readonly><br><br>
+                <input type="submit" value="Salvar Metas" disabled>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

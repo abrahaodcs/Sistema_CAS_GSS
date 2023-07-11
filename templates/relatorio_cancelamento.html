@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Cancelamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 20px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Relatório de Cancelamento</h1>
+
+  <h2>Contrato: {{ dados.contrato }}</h2>
+
+  {% for cancelamentoItem in dados.cancelamentoItems %}
+    <h2>Cancelamento de Item - {{ cancelamentoItem.item }}</h2>
+    <p>Valor Item: R$ {{ cancelamentoItem.valorItem }}</p>
+    <p>Número de Sessões: {{ cancelamentoItem.numeroSessoes }}</p>
+    <p>Valor das Sessões: R$ {{ cancelamentoItem.valorSessoes }}</p>
+    <p>Multa: {{ cancelamentoItem.multa }}%</p>
+    <p>Valor da Multa: R$ {{ cancelamentoItem.valorMulta }}</p>
+    <p>Cancelamento Item: R$ {{ cancelamentoItem.calculoCancelamentoItem }}</p>
+    <hr>
+  {% endfor %}
+
+  <h2>Valor do cancelamento do contrato: R$ {{ dados.calculoCancelamentoContrato }}</h2>
+
+  <p>Cálculo preliminar de cancelamento é apenas uma estimativa inicial e pode ser ajustado ou refinado à medida que mais informações ou dados se tornam disponíveis.</p>
+</body>
+</html>

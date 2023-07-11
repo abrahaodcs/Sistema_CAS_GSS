@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Cancelamento</title>
+  <style>
+    body {
+      background-color: #333;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #logo {
+      display: block;
+      margin: 0 auto;
+      width: 200px;
+    }
+
+    #title {
+      text-align: center;
+      font-size: 46px;
+      margin-top: 10px;
+      color: white;
+    }
+
+    #calculator {
+      position: absolute;
+      background-color: #336698;
+      margin: 10px auto;
+      width: 400px;
+      padding: 30px;
+      text-align: left;
+    }
+
+    #calculator h2 {
+      color: white;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    #calculator input[type="text"] {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+
+    #calculator button {
+      display: block;
+      width: 100%;
+      padding: 5px;
+      margin-top: 10px;
+    }
+
+    #result {
+      float: right;
+      background-color: #ccc;
+      margin: 10px auto;
+      width: 500px;
+      padding: 10px;
+      text-align: left;
+      font-size: 12px;
+      color: black;
+    }
+
+    #result h2 {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <img id="logo" src="/static/logo.png" alt="Logo">
+  <h1 id="title">Calculadora de Cancelamento</h1>
+
+  <div id="calculator">
+    <h2>Preencha todos os campos do formulário abaixo</h2>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome">
+
+    <label for="contrato">Contrato:</label>
+    <input type="text" id="contrato" name="contrato">
+
+    <h2>Item:</h2>
+
+    <label for="item">Item:</label>
+    <input type="text" id="item" name="item">
+
+    <label for="valor-item">Valor item:</label>
+    <input type="text" id="valor-item" name="valor-item">
+
+    <label for="sessoes">Número de sessões:</label>
+    <input type="text" id="sessoes" name="sessoes">
+
+    <label for="multa">Multa:</label>
+    <input type="text" id="multa" name="multa">
+
+    <label for="valor-pago">Valor pago:</label>
+    <input type="text" id="valor-pago" name="valor-pago">
+
+    <button onclick="calcularCancelamentoItem()">Calcular cancelamento item</button>
+    <button onclick="calcularCancelamentoContrato()">Calcular cancelamento contrato</button>
+    <button onclick="gerarCancelamentoPDF()">Gerar PDF</button>
+    <button onclick="limparCampos()">Cancelar</button>
+  </div>
+
+  <div id="result"></div>
+
+ <script>
+    let cancelamentoItems = [];
+
+    function calcularCancelamentoItem() {
+      var valorItem = parseFloat(document.getElementById("valor-item").value);
+      var numeroSessoes = parseInt(document.getElementById("sessoes").value);
+      var multa = parseFloat(document.getElementById("multa").value);
+      var valorPago = parseFloat(document.getElementById("valor-pago").value);
+
+      var valorSessoes = (valorItem / 5) * numeroSessoes;
+      var valorMulta = (valorItem / 100) * multa;
+      var calculoCancelamentoItem = (valorSessoes + valorMulta) - valorPago;
+
+      var item = document.getElementById("item").value;
+      var cancelamentoItem = {
+        item: item,
+        valorItem: valorItem,
+        numeroSessoes: numeroSessoes,
+        valorSessoes: valorSessoes,
+        multa: multa,
+        valorMulta: valorMulta,
+        calculoCancelamentoItem: calculoCancelamentoItem
+      };
+
+      cancelamentoItems.push(cancelamentoItem);
+
+      exibirResultadoCancelamentoItem(cancelamentoItem);
+
+      limparCamposItem();
+    }
+
+    function calcularCancelamentoContrato() {
+      var nome = document.getElementById("nome").value;
+      var contrato = document.getElementById("contrato").value;
+
+      var calculoCancelamentoContrato = 0;
+      for (var i = 0; i < cancelamentoItems.length; i++) {
+        calculoCancelamentoContrato += cancelamentoItems[i].calculoCancelamentoItem;
+      }
+
+      var resultado = {
+        nome: nome,
+        contrato: contrato,
+        cancelamentoItems: cancelamentoItems,
+        calculoCancelamentoContrato: calculoCancelamentoContrato
+      };
+
+      exibirResultadoCancelamentoContrato(resultado);
+    }
+
+    function exibirResultadoCancelamentoItem(cancelamentoItem) {
+      var resultDiv = document.getElementById("result");
+      var itemHtml =
+        "<h2>Cancelamento de Item - " + cancelamentoItem.item + "</h2>" +
+        "<p>Valor Item: R$" + cancelamentoItem.valorItem.toFixed(2) + "</p>" +
+        "<p>Número de Sessões: " + cancelamentoItem.numeroSessoes + "</p>" +
+        "<p>Valor das Sessões: R$" + cancelamentoItem.valorSessoes.toFixed(2) + "</p>" +
+        "<p>Multa: " + cancelamentoItem.multa + "%</p>" +
+        "<p>Valor da Multa: R$" + cancelamentoItem.valorMulta.toFixed(2) + "</p>" +
+        "<p>Cancelamento Item: R$" + cancelamentoItem.calculoCancelamentoItem.toFixed(2) + "</p><hr>";
+
+      resultDiv.insertAdjacentHTML("beforeend", itemHtml);
+    }
+
+    function exibirResultadoCancelamentoContrato(resultado) {
+      var resultDiv = document.getElementById("result");
+      var contratoHtml =
+        "<h2>Cancelamento do Contrato</h2>" +
+        "<p>Contrato: " + resultado.contrato + "</p>";
+
+      for (var i = 0; i < resultado.cancelamentoItems.length; i++) {
+        var cancelamentoItemHtml =
+          "<p>Cancelamento de Item - " + resultado.cancelamentoItems[i].item + "</p>" +
+          "<p>Valor Item: R$" + resultado.cancelamentoItems[i].valorItem.toFixed(2) + "</p>" +
+          "<p>Número de Sessões: " + resultado.cancelamentoItems[i].numeroSessoes + "</p>" +
+          "<p>Valor das Sessões: R$" + resultado.cancelamentoItems[i].valorSessoes.toFixed(2) + "</p>" +
+          "<p>Multa: " + resultado.cancelamentoItems[i].multa + "%</p>" +
+          "<p>Valor da Multa: R$" + resultado.cancelamentoItems[i].valorMulta.toFixed(2) + "</p>" +
+          "<p>Cancelamento Item: R$" + resultado.cancelamentoItems[i].calculoCancelamentoItem.toFixed(2) + "</p><hr>";
+        contratoHtml += cancelamentoItemHtml;
+      }
+
+      contratoHtml +=
+        "<p>Valor do cancelamento do contrato: R$" + resultado.calculoCancelamentoContrato.toFixed(2) + "</p>" +
+        "<p>Cálculo preliminar de cancelamento é apenas uma estimativa inicial e pode ser ajustado ou refinado à medida que mais informações ou dados se tornam disponíveis.</p><hr>";
+
+      resultDiv.innerHTML = contratoHtml;
+    }
+
+    function limparCamposItem() {
+      document.getElementById("item").value = "";
+      document.getElementById("valor-item").value = "";
+      document.getElementById("sessoes").value = "";
+      document.getElementById("multa").value = "";
+      document.getElementById("valor-pago").value = "";
+    }
+
+    function limparCampos() {
+      document.getElementById("nome").value = "";
+      document.getElementById("contrato").value = "";
+      document.getElementById("result").innerHTML = "";
+      cancelamentoItems = [];
+    }
+
+    function gerarCancelamentoPDF() {
+      var contrato = document.getElementById("contrato").value;
+
+      // Crie um formulário para enviar os dados para a rota '/gerar_cancelamento_pdf'
+      var form = document.createElement("form");
+      form.setAttribute("method", "POST");
+      form.setAttribute("action", "/gerar_cancelamento_pdf");
+
+      // Crie um campo oculto para enviar o valor do contrato
+      var contratoInput = document.createElement("input");
+      contratoInput.setAttribute("type", "hidden");
+      contratoInput.setAttribute("name", "contrato");
+      contratoInput.setAttribute("value", contrato);
+
+      // Anexe o campo oculto ao formulário
+      form.appendChild(contratoInput);
+
+      // Anexe o formulário ao documento e envie-o
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Usuários</title>
+    <style>
+        body {
+            background-color: #444;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .logo img {
+            width: 360px;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 6cm;
+            background-color: #002147;
+            font-size: 13px;
+            padding: 8px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .sidebar button {
+            display: block;
+            width: 100%;
+            padding: 6px 12px;
+            margin-bottom: 4px;
+            color: white;
+            background-color: #002147;
+            border: none;
+            text-align: left;
+            font-size: 13px;
+        }
+        .sidebar button:hover {
+            background-color: #003d79;
+            cursor: pointer;
+        }
+        .content {
+            margin-left: 6cm;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .dialog-box {
+            margin: 0 auto;
+            background-color: #4682B4;
+            color: white;
+            font-size: 18px;
+            padding: 60px;
+            text-align: center;
+            width: 400px;
+        }
+        .dialog-title {
+            font-size: 18px;
+            color: white;
+            font-weight: bold;
+        }
+        .user-info {
+            text-align: left;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        .user-info strong {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .user-info p {
+            margin: 5px 0;
+        }
+        .logout {
+            position: fixed;
+            bottom: 60px;
+            left: 8px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+    <div class="sidebar">
+        {% if session.nivel_acesso == 'Administrador' %}
+            <a href="{{ url_for('adicionar_usuario_bp.adicionar_usuario') }}"><button>Adicionar usuário</button></a>
+            <a href="{{ url_for('editar_usuarios.editar_usuarios') }}"><button>Editar usuário</button></a>
+        {% endif %}
+        <button onclick="openPage('buscar_usuario.html')">Buscar usuário</button>
+        <button onclick="openPage('editar_informacoes.html')">Editar informações</button>
+    </div>
+    <div class="content">
+        <div class="dialog-box">
+            <div class="dialog-title">Trabalhar em equipe é saber ser parte de um todo. É como ser uma parte fundamental
+                de um corpo, mas sabendo que sem corpo essa parte de nada serve. Ter a capacidade de trabalhar bem em
+                equipe mostra humildade, tolerância, inteligência emocional e companheirismo.
+
+Ninguém é nada sozinho. E se queremos fazer algo grande, importante e que nos traga orgulho, precisamos fazer em equipe. Alcançar o sucesso com um esforço coletivo é muito mais prazeroso.</div>
+        </div>
+    </div>
+    <div class="logout">
+        <a onclick="goBack()">Voltar</a>
+    </div>
+
+    <script>
+        function openPage(page) {
+            window.location.href = '/' + page;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

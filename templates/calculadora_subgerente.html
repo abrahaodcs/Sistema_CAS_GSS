@@ -1,0 +1,79 @@
+<!-- calculadora_subgerente.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora Subgerente</title>
+</head>
+<body>
+    <h1>Calculadora Subgerente</h1>
+    <form method="POST" action="/calculadora_subgerente">
+        <h2>Loja</h2>
+        <label>Meta Dezena 1:</label>
+        <input type="number" name="meta_loja_dezena_1" step="0.01" required><br>
+        <label>Venda Dezena 1:</label>
+        <input type="number" name="venda_loja_dezena_1" step="0.01" required><br>
+        <label>Meta Dezena 2:</label>
+        <input type="number" name="meta_loja_dezena_2" step="0.01" required><br>
+        <label>Venda Dezena 2:</label>
+        <input type="number" name="venda_loja_dezena_2" step="0.01" required><br>
+        <label>Meta Dezena 3:</label>
+        <input type="number" name="meta_loja_dezena_3" step="0.01" required><br>
+        <label>Venda Dezena 3:</label>
+        <input type="number" name="venda_loja_dezena_3" step="0.01" required><br>
+
+        <h2>Individual</h2>
+        <label>Meta Dezena 1:</label>
+        <input type="number" name="meta_individual_dezena_1" step="0.01" required><br>
+        <label>Venda Dezena 1:</label>
+        <input type="number" name="venda_individual_dezena_1" step="0.01" required><br>
+        <label>Meta Dezena 2:</label>
+        <input type="number" name="meta_individual_dezena_2" step="0.01" required><br>
+        <label>Venda Dezena 2:</label>
+        <input type="number" name="venda_individual_dezena_2" step="0.01" required><br>
+        <label>Meta Dezena 3:</label>
+        <input type="number" name="meta_individual_dezena_3" step="0.01" required><br>
+        <label>Venda Dezena 3:</label>
+        <input type="number" name="venda_individual_dezena_3" step="0.01" required><br>
+
+        <h2>NPS</h2>
+        <label>NPS:</label>
+        <input type="number" name="nps" step="0.01" required><br>
+
+        <h2>RV Sem Acelerador</h2>
+        <label>RV Sem Acelerador:</label>
+        <input type="number" name="rv_sem_acelerador" step="0.01" required><br>
+
+        <input type="submit" value="Calcular">
+    </form>
+
+    {% if request.method == 'POST' %}
+        <h2>Resultados</h2>
+        <h3>Loja</h3>
+        <p>Percentual da Meta: {{ percentual_meta_loja }}%</p>
+        <p>Status Dezena 1: {{ status_loja_dezena_1 }}</p>
+        <p>Status Dezena 2: {{ status_loja_dezena_2 }}</p>
+        <p>Status Dezena 3: {{ status_loja_dezena_3 }}</p>
+
+        <h3>Individual</h3>
+        <p>Percentual da Meta: {{ percentual_meta_individual }}%</p>
+        <p>Status Dezena 1: {{ status_individual_dezena_1 }}</p>
+        <p>Status Dezena 2: {{ status_individual_dezena_2 }}</p>
+        <p>Status Dezena 3: {{ status_individual_dezena_3 }}</p>
+
+        <h3>Total</h3>
+        <p>Status Loja: {{ status_loja_mes }}</p>
+        <p>Status Individual: {{ status_individual_mes }}</p>
+
+        <h3>RV</h3>
+        <p>Dezena 1 Loja: {{ rv_dezena_loja_1 }}</p>
+        <p>Dezena 2 Loja: {{ rv_dezena_loja_2 }}</p>
+        <p>Dezena 3 Loja: {{ rv_dezena_loja_3 }}</p>
+        <p>Dezena 1 Individual: {{ rv_dezena_individual_1 }}</p>
+        <p>Dezena 2 Individual: {{ rv_dezena_individual_2 }}</p>
+        <p>Dezena 3 Individual: {{ rv_dezena_individual_3 }}</p>
+        <p>NPS RV: {{ rv_nps }}</p>
+        <p>Total RV: {{ total_rv }}</p>
+    {% endif %}
+</body>
+</html>

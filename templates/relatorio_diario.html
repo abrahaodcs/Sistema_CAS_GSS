@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório Diário Caixa</title>
+    <style>
+        /* Estilos do relatório */
+        /* ... */
+
+    </style>
+</head>
+<body>
+    <h1>Relatório Diário Caixa</h1>
+    <h2>Total de movimentação no dia: {{ total_movimentacao }}</h2>
+    <h2>Total Venda: {{ total_venda }}</h2>
+    <h2>Total Regularização: {{ total_regularizacao }}</h2>
+    <h2>Total Dinheiro: {{ totais_forma_pagamento['dinheiro'] }}</h2>
+    <h2>Total Pix: {{ totais_forma_pagamento['pix'] }}</h2>
+    <h2>Total Débito: {{ totais_forma_pagamento['debito'] }}</h2>
+    <h2>Total Crédito: {{ totais_forma_pagamento['credito'] }}</h2>
+    <h2>Total Recorrente: {{ totais_forma_pagamento['recorrente'] }}</h2>
+    <h2>Total Outros: {{ totais_forma_pagamento['outros'] }}</h2>
+
+    <h2>Total recebido por cada usuário no mesmo dia da solicitação:</h2>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Total Recebido</th>
+        </tr>
+        {% for usuario, total_recebido in totais_por_usuario %}
+            <tr>
+                <td>{{ usuario }}</td>
+                <td>{{ total_recebido }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Tabela com todas as informações inseridas de todos os usuários da unidade no mesmo dia da solicitação:</h2>
+    <table>
+        <tr>
+            <th>Data</th>
+            <th>Unidade</th>
+            <th>CPF</th>
+            <th>Nome</th>
+            <th>Tipo de Movimentação</th>
+            <th>Forma de Pagamento</th>
+            <th>Valor</th>
+            <th>Cliente</th>
+            <th>Contrato</th>
+            <th>Observação</th>
+        </tr>
+        {% for registro in registros_caixa %}
+            <tr>
+                <td>{{ registro['data'] }}</td>
+                <td>{{ registro['unidade'] }}</td>
+                <td>{{ registro['cpf'] }}</td>
+                <td>{{ registro['nome'] }}</td>
+                <td>{{ registro['tipo_movimentacao'] }}</td>
+                <td>{{ registro['forma_pagamento'] }}</td>
+                <td>{{ registro['valor'] }}</td>
+                <td>{{ registro['cliente'] }}</td>
+                <td>{{ registro['contrato'] }}</td>
+                <td>{{ registro['observacao'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
