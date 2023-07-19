@@ -1,6 +1,6 @@
 # app.py
 
-from flask import Flask, render_template, g, session, redirect, url_for, request
+from flask import Flask, g
 import mysql.connector
 
 app = Flask(__name__)
@@ -17,8 +17,9 @@ db_config = {
 
 # Função para obter a conexão com o banco de dados
 def get_db_connection():
-    conn = mysql.connector.connect(**db_config)
-    return conn
+    if 'db_connection' not in g:
+        g.db_connection = mysql.connector.connect(**db_config)
+    return g.db_connection
 
 # Registro dos blueprints
 from routes.calculadora_cancelamento import calculadora_cancelamento_bp

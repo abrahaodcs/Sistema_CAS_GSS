@@ -3,75 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Calculadora de Cancelamento</title>
-  <style>
-    body {
-      background-color: #333;
-      color: white;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    #logo {
-      display: block;
-      margin: 0 auto;
-      width: 200px;
-    }
-
-    #title {
-      text-align: center;
-      font-size: 46px;
-      margin-top: 10px;
-      color: white;
-    }
-
-    #calculator {
-      position: absolute;
-      background-color: #336698;
-      margin: 10px auto;
-      width: 400px;
-      padding: 30px;
-      text-align: left;
-    }
-
-    #calculator h2 {
-      color: white;
-      font-size: 22px;
-      margin-bottom: 20px;
-    }
-
-    #calculator input[type="text"] {
-      width: 100%;
-      padding: 5px;
-      margin-bottom: 20px;
-    }
-
-    #calculator button {
-      display: block;
-      width: 100%;
-      padding: 5px;
-      margin-top: 10px;
-    }
-
-    #result {
-      float: right;
-      background-color: #ccc;
-      margin: 10px auto;
-      width: 500px;
-      padding: 10px;
-      text-align: left;
-      font-size: 12px;
-      color: black;
-    }
-
-    #result h2 {
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='relatorio.css') }}">
 </head>
 <body>
-  <img id="logo" src="/static/logo.png" alt="Logo">
+  <img id="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
   <h1 id="title">Calculadora de Cancelamento</h1>
 
   <div id="calculator">
@@ -81,6 +16,9 @@
 
     <label for="contrato">Contrato:</label>
     <input type="text" id="contrato" name="contrato">
+
+    <label for="valor-pago">Valor pago:</label>
+    <input type="text" id="valor-pago" name="valor-pago">
 
     <h2>Item:</h2>
 
@@ -96,9 +34,6 @@
     <label for="multa">Multa:</label>
     <input type="text" id="multa" name="multa">
 
-    <label for="valor-pago">Valor pago:</label>
-    <input type="text" id="valor-pago" name="valor-pago">
-
     <button onclick="calcularCancelamentoItem()">Calcular cancelamento item</button>
     <button onclick="calcularCancelamentoContrato()">Calcular cancelamento contrato</button>
     <button onclick="gerarCancelamentoPDF()">Gerar PDF</button>
@@ -107,18 +42,18 @@
 
   <div id="result"></div>
 
- <script>
+  <script>
     let cancelamentoItems = [];
 
     function calcularCancelamentoItem() {
-      var valorItem = parseFloat(document.getElementById("valor-item").value);
+      var valorItem = parseFloat(document.getElementById("valor-item").value.replace(',', '.'));
       var numeroSessoes = parseInt(document.getElementById("sessoes").value);
-      var multa = parseFloat(document.getElementById("multa").value);
-      var valorPago = parseFloat(document.getElementById("valor-pago").value);
+      var multa = parseFloat(document.getElementById("multa").value.replace(',', '.'));
+      var valorPago = parseFloat(document.getElementById("valor-pago").value.replace(',', '.'));
 
       var valorSessoes = (valorItem / 5) * numeroSessoes;
-      var valorMulta = (valorItem / 100) * multa;
-      var calculoCancelamentoItem = (valorSessoes + valorMulta) - valorPago;
+      var valorMulta = ((valorItem - valorSessoes) / 100) * multa;
+      var calculoCancelamentoItem = valorSessoes + valorMulta;
 
       var item = document.getElementById("item").value;
       var cancelamentoItem = {
@@ -142,16 +77,24 @@
       var nome = document.getElementById("nome").value;
       var contrato = document.getElementById("contrato").value;
 
-      var calculoCancelamentoContrato = 0;
+      var valorSessoesContrato = 0;
+      var valorMultaContrato = 0;
+
       for (var i = 0; i < cancelamentoItems.length; i++) {
-        calculoCancelamentoContrato += cancelamentoItems[i].calculoCancelamentoItem;
+        valorSessoesContrato += cancelamentoItems[i].valorSessoes;
+        valorMultaContrato += cancelamentoItems[i].valorMulta;
       }
+
+      var valorPago = parseFloat(document.getElementById("valor-pago").value.replace(',', '.'));
+      var valorCancelamentoContrato = (valorSessoesContrato + valorMultaContrato) - valorPago;
 
       var resultado = {
         nome: nome,
         contrato: contrato,
         cancelamentoItems: cancelamentoItems,
-        calculoCancelamentoContrato: calculoCancelamentoContrato
+        valorSessoesContrato: valorSessoesContrato,
+        valorMultaContrato: valorMultaContrato,
+        valorCancelamentoContrato: valorCancelamentoContrato
       };
 
       exibirResultadoCancelamentoContrato(resultado);
@@ -168,13 +111,14 @@
         "<p>Valor da Multa: R$" + cancelamentoItem.valorMulta.toFixed(2) + "</p>" +
         "<p>Cancelamento Item: R$" + cancelamentoItem.calculoCancelamentoItem.toFixed(2) + "</p><hr>";
 
-      resultDiv.insertAdjacentHTML("beforeend", itemHtml);
+      resultDiv.innerHTML += itemHtml;
     }
 
     function exibirResultadoCancelamentoContrato(resultado) {
       var resultDiv = document.getElementById("result");
       var contratoHtml =
-        "<h2>Cancelamento do Contrato</h2>" +
+        "<h2>Cancelamento preliminar do contrato</h2>" +
+        "<p>Nome: " + resultado.nome + "</p>" +
         "<p>Contrato: " + resultado.contrato + "</p>";
 
       for (var i = 0; i < resultado.cancelamentoItems.length; i++) {
@@ -190,10 +134,13 @@
       }
 
       contratoHtml +=
-        "<p>Valor do cancelamento do contrato: R$" + resultado.calculoCancelamentoContrato.toFixed(2) + "</p>" +
-        "<p>Cálculo preliminar de cancelamento é apenas uma estimativa inicial e pode ser ajustado ou refinado à medida que mais informações ou dados se tornam disponíveis.</p><hr>";
+        "<p>Valor das Sessões do Contrato: R$" + resultado.valorSessoesContrato.toFixed(2) + "</p>" +
+        "<p>Valor da Multa do Contrato: R$" + resultado.valorMultaContrato.toFixed(2) + "</p>" +
+        "<p>Valor Pago: R$" + parseFloat(document.getElementById("valor-pago").value.replace(',', '.')).toFixed(2) + "</p>" +
+        "<p>Valor do Cancelamento do Contrato: R$" + resultado.valorCancelamentoContrato.toFixed(2) + "</p>" +
+        "<p>O cálculo preliminar de cancelamento é apenas uma estimativa inicial e pode ser ajustado ou refinado à medida que mais informações ou dados se tornem disponíveis.</p><hr>";
 
-      resultDiv.innerHTML = contratoHtml;
+      resultDiv.innerHTML += contratoHtml;
     }
 
     function limparCamposItem() {
@@ -201,12 +148,12 @@
       document.getElementById("valor-item").value = "";
       document.getElementById("sessoes").value = "";
       document.getElementById("multa").value = "";
-      document.getElementById("valor-pago").value = "";
     }
 
     function limparCampos() {
       document.getElementById("nome").value = "";
       document.getElementById("contrato").value = "";
+      document.getElementById("valor-pago").value = "";
       document.getElementById("result").innerHTML = "";
       cancelamentoItems = [];
     }
@@ -233,6 +180,5 @@
       form.submit();
     }
   </script>
-
 </body>
 </html>

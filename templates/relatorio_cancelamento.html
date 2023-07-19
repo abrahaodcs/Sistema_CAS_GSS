@@ -2,44 +2,57 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Relatório de Cancelamento</title>
+  <title>Cancelamento preliminar do contrato</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-
-    h1 {
-      text-align: center;
+      margin: 0;
+      padding: 0;
     }
 
     h2 {
-      margin-top: 20px;
+      font-size: 22px;
+      margin-bottom: 20px;
     }
 
     p {
-      margin-bottom: 10px;
+      margin: 5px 0;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 10px 0;
     }
   </style>
 </head>
 <body>
-  <h1>Relatório de Cancelamento</h1>
+  <h1>Cancelamento preliminar do contrato</h1>
 
-  <h2>Contrato: {{ dados.contrato }}</h2>
+  <h2>Dados do Contrato</h2>
+  <p>Contrato: {{ dados.contrato }}</p>
 
-  {% for cancelamentoItem in dados.cancelamentoItems %}
-    <h2>Cancelamento de Item - {{ cancelamentoItem.item }}</h2>
-    <p>Valor Item: R$ {{ cancelamentoItem.valorItem }}</p>
-    <p>Número de Sessões: {{ cancelamentoItem.numeroSessoes }}</p>
-    <p>Valor das Sessões: R$ {{ cancelamentoItem.valorSessoes }}</p>
-    <p>Multa: {{ cancelamentoItem.multa }}%</p>
-    <p>Valor da Multa: R$ {{ cancelamentoItem.valorMulta }}</p>
-    <p>Cancelamento Item: R$ {{ cancelamentoItem.calculoCancelamentoItem }}</p>
-    <hr>
-  {% endfor %}
+  <h2>Itens de Cancelamento</h2>
+  <ul>
+    {% for item in dados.cancelamentoItems %}
+      <li>
+        <h3>Item: {{ item.item }}</h3>
+        <p>Valor Item: R$ {{ item.valor_item }}</p>
+        <p>Número de Sessões: {{ item.numero_sessoes }}</p>
+        <p>Valor das Sessões: R$ {{ item.valor_sessoes }}</p>
+        <p>Multa: {{ item.multa }}%</p>
+        <p>Valor da Multa: R$ {{ item.valor_multa }}</p>
+        <p>Cancelamento Item: R$ {{ item.calculo_cancelamento_item }}</p>
+      </li>
+    {% endfor %}
+  </ul>
 
-  <h2>Valor do cancelamento do contrato: R$ {{ dados.calculoCancelamentoContrato }}</h2>
+  <h2>Total do Cancelamento do Contrato</h2>
+  <p>Valor das Sessões do Contrato: R$ {{ dados.valorSessoesContrato }}</p>
+  <p>Valor da Multa do Contrato: R$ {{ dados.valorMultaContrato }}</p>
+  <p>Valor Pago: R$ {{ dados.valorPago }}</p>
+  <p>Valor do Cancelamento do Contrato: R$ {{ dados.valorCancelamentoContrato }}</p>
 
-  <p>Cálculo preliminar de cancelamento é apenas uma estimativa inicial e pode ser ajustado ou refinado à medida que mais informações ou dados se tornam disponíveis.</p>
+  <p>O cálculo preliminar de cancelamento é apenas uma estimativa inicial e pode ser ajustado ou refinado à medida que mais informações ou dados se tornem disponíveis.</p>
 </body>
 </html>
