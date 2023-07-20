@@ -3,55 +3,165 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Calculadora Especialista</title>
+    <title>Calculadora Bonificação Especialista</title>
+    <style>
+        body {
+            background-color: #222;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            color: #fff;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #28a;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-group input {
+            padding: 5px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+        .form-group input[type="submit"] {
+            background-color: #28a;
+            color: #fff;
+            cursor: pointer;
+        }
+        .result-group {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+        .result-group h3 {
+            margin-bottom: 10px;
+        }
+        .result-group p {
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Calculadora Especialista</h1>
-    <form method="POST" action="/calculadora_especialista">
-        <h2>Loja</h2>
-        <label>Meta Dezena 1:</label>
-        <input type="number" name="meta_loja_dezena_1" step="0.01" required><br>
-        <label>Venda Dezena 1:</label>
-        <input type="number" name="venda_loja_dezena_1" step="0.01" required><br>
-        <label>Meta Dezena 2:</label>
-        <input type="number" name="meta_loja_dezena_2" step="0.01" required><br>
-        <label>Venda Dezena 2:</label>
-        <input type="number" name="venda_loja_dezena_2" step="0.01" required><br>
-        <label>Meta Dezena 3:</label>
-        <input type="number" name="meta_loja_dezena_3" step="0.01" required><br>
-        <label>Venda Dezena 3:</label>
-        <input type="number" name="venda_loja_dezena_3" step="0.01" required><br>
-
-        <h2>Individual</h2>
-        <label>Meta Dezena 1:</label>
-        <input type="number" name="meta_individual_dezena_1" step="0.01" required><br>
-        <label>Venda Dezena 1:</label>
-        <input type="number" name="venda_individual_dezena_1" step="0.01" required><br>
-        <label>Meta Dezena 2:</label>
-        <input type="number" name="meta_individual_dezena_2" step="0.01" required><br>
-        <label>Venda Dezena 2:</label>
-        <input type="number" name="venda_individual_dezena_2" step="0.01" required><br>
-        <label>Meta Dezena 3:</label>
-        <input type="number" name="meta_individual_dezena_3" step="0.01" required><br>
-        <label>Venda Dezena 3:</label>
-        <input type="number" name="venda_individual_dezena_3" step="0.01" required><br>
-
-        <input type="submit" value="Calcular">
-    </form>
-
-    {% if request.method == 'POST' %}
-        <h2>Resultados</h2>
-        <h3>Loja</h3>
-        <p>Percentual da Meta: {{ percentual_meta_loja }}%</p>
-        <p>Status Dezena 1: {{ status_loja_dezena_1 }}</p>
-        <p>Status Dezena 2: {{ status_loja_dezena_2 }}</p>
-        <p>Status Dezena 3: {{ status_loja_dezena_3 }}</p>
-
-        <h3>Individual</h3>
-        <p>Percentual da Meta: {{ percentual_meta_individual }}%</p>
-        <p>Status Dezena 1: {{ status_individual_dezena_1 }}</p>
-        <p>Status Dezena 2: {{ status_individual_dezena_2 }}</p>
-        <p>Status Dezena 3: {{ status_individual_dezena_3 }}</p>
-    {% endif %}
+    <div class="container">
+        <h1>Calculadora Bonificação Especialista</h1>
+        <form action="" method="POST">
+            <div class="form-group">
+                <label for="meta_loja_dezena1">Meta Loja Dezena 1:</label>
+                <input type="text" id="meta_loja_dezena1" name="meta_loja_dezena1" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="meta_loja_dezena2">Meta Loja Dezena 2:</label>
+                <input type="text" id="meta_loja_dezena2" name="meta_loja_dezena2" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="meta_loja_dezena3">Meta Loja Dezena 3:</label>
+                <input type="text" id="meta_loja_dezena3" name="meta_loja_dezena3" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="meta_individual_dezena1">Meta Individual Dezena 1:</label>
+                <input type="text" id="meta_individual_dezena1" name="meta_individual_dezena1" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="meta_individual_dezena2">Meta Individual Dezena 2:</label>
+                <input type="text" id="meta_individual_dezena2" name="meta_individual_dezena2" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="meta_individual_dezena3">Meta Individual Dezena 3:</label>
+                <input type="text" id="meta_individual_dezena3" name="meta_individual_dezena3" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="venda_loja_dezena1">Venda Loja Dezena 1:</label>
+                <input type="text" id="venda_loja_dezena1" name="venda_loja_dezena1" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="venda_loja_dezena2">Venda Loja Dezena 2:</label>
+                <input type="text" id="venda_loja_dezena2" name="venda_loja_dezena2" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="venda_loja_dezena3">Venda Loja Dezena 3:</label>
+                <input type="text" id="venda_loja_dezena3" name="venda_loja_dezena3" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="venda_individual_dezena1">Venda Individual Dezena 1:</label>
+                <input type="text" id="venda_individual_dezena1" name="venda_individual_dezena1" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="venda_individual_dezena2">Venda Individual Dezena 2:</label>
+                <input type="text" id="venda_individual_dezena2" name="venda_individual_dezena2" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="venda_individual_dezena3">Venda Individual Dezena 3:</label>
+                <input type="text" id="venda_individual_dezena3" name="venda_individual_dezena3" placeholder="R$ 0,00" required>
+            </div>
+            <div class="form-group">
+                <label for="nps">NPS:</label>
+                <input type="text" id="nps" name="nps" placeholder="0" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Calcular">
+            </div>
+        </form>
+        {% if request.method == 'POST' %}
+            <div class="result-group">
+                <h3>Resultados:</h3>
+                <p>Meta Loja Dezena 1: {{ meta_loja_dezena1 }}</p>
+                <p>Meta Loja Dezena 2: {{ meta_loja_dezena2 }}</p>
+                <p>Meta Loja Dezena 3: {{ meta_loja_dezena3 }}</p>
+                <p>Total Meta Loja: {{ total_meta_loja }}</p>
+                <p>Meta Individual Dezena 1: {{ meta_individual_dezena1 }}</p>
+                <p>Meta Individual Dezena 2: {{ meta_individual_dezena2 }}</p>
+                <p>Meta Individual Dezena 3: {{ meta_individual_dezena3 }}</p>
+                <p>Total Meta Individual: {{ total_meta_individual }}</p>
+                <p>Venda Loja Dezena 1: {{ venda_loja_dezena1 }}</p>
+                <p>Venda Loja Dezena 2: {{ venda_loja_dezena2 }}</p>
+                <p>Venda Loja Dezena 3: {{ venda_loja_dezena3 }}</p>
+                <p>Total Venda Loja: {{ total_venda_loja }}</p>
+                <p>Venda Individual Dezena 1: {{ venda_individual_dezena1 }}</p>
+                <p>Venda Individual Dezena 2: {{ venda_individual_dezena2 }}</p>
+                <p>Venda Individual Dezena 3: {{ venda_individual_dezena3 }}</p>
+                <p>Total Venda Individual: {{ total_venda_individual }}</p>
+                <p>Atingimento Meta Loja 1: {{ atingimento_meta_loja1 }}</p>
+                <p>Atingimento Meta Loja 2: {{ atingimento_meta_loja2 }}</p>
+                <p>Atingimento Meta Loja 3: {{ atingimento_meta_loja3 }}</p>
+                <p>Atingimento Meta Loja Mês: {{ atingimento_meta_loja_mes }}</p>
+                <p>Atingimento Meta Individual 1: {{ atingimento_meta_individual1 }}</p>
+                <p>Atingimento Meta Individual 2: {{ atingimento_meta_individual2 }}</p>
+                <p>Atingimento Meta Individual 3: {{ atingimento_meta_individual3 }}</p>
+                <p>Atingimento Meta Individual Mês: {{ atingimento_meta_individual_mes }}</p>
+                <p>Status Loja 1: {{ status_loja1 }}</p>
+                <p>Status Loja 2: {{ status_loja2 }}</p>
+                <p>Status Loja 3: {{ status_loja3 }}</p>
+                <p>Status Loja Mês: {{ status_loja_mes }}</p>
+                <p>Status Individual 1: {{ status_individual1 }}</p>
+                <p>Status Individual 2: {{ status_individual2 }}</p>
+                <p>Status Individual 3: {{ status_individual3 }}</p>
+                <p>Bonificação Individual 1: {{ bonificacao_individual1 }}</p>
+                <p>Bonificação Individual 2: {{ bonificacao_individual2 }}</p>
+                <p>Bonificação Individual 3: {{ bonificacao_individual3 }}</p>
+                <p>RV 1: {{ rv1 }}</p>
+                <p>RV 2: {{ rv2 }}</p>
+                <p>RV 3: {{ rv3 }}</p>
+                <p>NPS: {{ nps }}</p>
+                <p>RV NPS: {{ rv_nps }}</p>
+                <p>RV sem Acelerador: {{ rv_sem_acelerador }}</p>
+                <p>Acelerador: {{ acelerador }}</p>
+                <p>RV Total: {{ rv_total }}</p>
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>

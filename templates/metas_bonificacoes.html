@@ -90,10 +90,10 @@
     </div>
     <div class="sidebar">
         {% if session.nivel_acesso == 'Administrador' %}
-            <a href="{{ url_for('metas_unidades.metas_unidades') }}"><button>Metas unidades</button></a>
+            <a href="{{ url_for('metas_bonificacoes.metas_bonificacoes') }}"><button>Metas unidades</button></a>
             <a href="#"><button>Metas colaboradoras</button></a>
         {% endif %}
-        <button onclick="#">Calculadora de bonificações</button>
+        <button onclick="location.href='{{ url_for('calculadora_bonificacao.calculadora_bonificacao') }}'">Calculadora de bonificação</button>
         <button onclick="#">Bonificações</button>
     </div>
     <div class="content">

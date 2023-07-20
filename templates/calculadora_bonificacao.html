@@ -1,93 +1,119 @@
-<!-- calculadora_consultora.html -->
+<!-- calculadora_bonificacao.html -->
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Calculadora Consultora</title>
+    <meta charset="UTF-8">
+    <title>Calculadora de Bonificação</title>
+    <style>
+        body {
+            background-color: #444;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .logo img {
+            width: 280px;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 6cm;
+            background-color: #002147;
+            font-size: 13px;
+            padding: 8px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .sidebar button {
+            display: block;
+            width: 100%;
+            padding: 6px 12px;
+            margin-bottom: 4px;
+            color: white;
+            background-color: #002147;
+            border: none;
+            text-align: left;
+            font-size: 13px;
+        }
+        .sidebar button:hover {
+            background-color: #003d79;
+            cursor: pointer;
+        }
+        .content {
+            margin-left: 6cm;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .dialog-box {
+            margin: 0 auto;
+            background-color: #4682B4;
+            color: white;
+            font-size: 18px;
+            padding: 60px;
+            text-align: center;
+            width: 400px;
+        }
+        .dialog-title {
+            font-size: 18px;
+            color: white;
+            font-weight: bold;
+        }
+        .user-info {
+            text-align: left;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        .user-info strong {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .user-info p {
+            margin: 5px 0;
+        }
+        .logout {
+            position: fixed;
+            bottom: 60px;
+            left: 8px;
+            font-size: 13px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Calculadora Consultora</h1>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+    <div class="sidebar">
+        <button onclick="#">Calculadora gerente</button>
+        <button onclick="#">Calculadora subgerente</button>
+        <button onclick="#">Calculadora plena</button>
+        <button onclick="#">Calculadora consultora</button>
+        <button onclick="location.href='/calculadora_especialista'">Calculadora especialista</button>
+        <button onclick="#">Calculadora consultora de avaliação</button>
+    </div>
+    <div class="content">
+        <div class="dialog-box">
+            <div class="dialog-title">Não espere pelos momentos perfeitos. Crie-os. Persiga suas metas incansavelmente e
+                faça do impossível uma mera questão de tempo.</div>
+        </div>
+    </div>
+    <div class="logout">
+        <a onclick="goBack()">Voltar</a>
+    </div>
 
-    <h2>Meta Dezena</h2>
-    <table>
-        <tr>
-            <th></th>
-            <th>META DEZENA</th>
-            <th>SUPER DEZENA</th>
-            <th>HIPER DEZENA</th>
-        </tr>
-        <tr>
-            <td>100%</td>
-            <td>120%</td>
-            <td>144%</td>
-        </tr>
-        <tr>
-            <td>1,0%</td>
-            <td>1,5%</td>
-            <td>2,5%</td>
-        </tr>
-    </table>
+    <script>
+        function openPage(page) {
+            window.location.href = '/' + page;
+        }
 
-    <h2>NPS MÊS</h2>
-    <table>
-        <tr>
-            <th></th>
-            <th>R$</th>
-            <th>ACEL. META MÊS</th>
-            <th>ACEL. SUPER MÊS</th>
-            <th>ACEL. HIPER MÊS</th>
-        </tr>
-        <tr>
-            <td>85</td>
-            <td>100</td>
-            <td>30%</td>
-            <td>45%</td>
-            <td>60%</td>
-        </tr>
-    </table>
-
-    <h2>META LOJA</h2>
-    <table>
-        <tr>
-            <th>1º DEZENA</th>
-            <th>R$ -</th>
-            <th>R$ -</th>
-            <th>0,0%</th>
-            <th>R$ -</th>
-            <th>R$ -</th>
-            <th>0,0%</th>
-            <th>R$ -</th>
-            <th>na</th>
-            <th>na</th>
-        </tr>
-        <!-- adicione o código para as outras dezenas e metas -->
-    </table>
-
-    <h2>NPS</h2>
-    <table>
-        <tr>
-            <th></th>
-            <th>R$ -</th>
-        </tr>
-    </table>
-
-    <h2>RV SEM ACELERADOR</h2>
-    <table>
-        <tr>
-            <th>R$ -</th>
-        </tr>
-    </table>
-
-    <h2>ACELERADOR SEM ACEL.</h2>
-    <table>
-        <!-- adicione o código para as tabelas do acelerador -->
-    </table>
-
-    <h2>TOTAL RV</h2>
-    <table>
-        <tr>
-            <th>R$ -</th>
-        </tr>
-    </table>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 </html>

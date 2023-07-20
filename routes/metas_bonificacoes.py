@@ -13,7 +13,7 @@ def metas_bonificacoes():
     cpf = session['cpf']
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    query = "SELECT CPF, Cargo, NivelOrganizacional, Nome FROM usuarios WHERE CPF = %s"
+    query = "SELECT CPF, Cargo, NivelOrganizacional, Nome, Email, Celular, DATE_FORMAT(DataNascimento, '%%d/%%m/%%Y') AS DataNascimento, DATE_FORMAT(DataIngresso, '%%d/%%m/%%Y') AS DataIngresso FROM usuarios WHERE CPF = %s"
     cursor.execute(query, (cpf,))
     usuario = cursor.fetchone()
 
