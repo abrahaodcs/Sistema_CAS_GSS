@@ -115,10 +115,20 @@ def format_money(value):
 def format_percent(value):
     return f'{value:.2%}'
 
-def calcular_status(atingimento):
+def calcular_status_loja(atingimento):
     if atingimento >= 1.44:
         return 'Hiper'
     elif atingimento >= 1.2:
+        return 'Super'
+    elif atingimento >= 1.0:
+        return 'Meta'
+    else:
+        return 'Na'
+
+def calcular_status_individual(atingimento):
+    if atingimento >= 1.55:
+        return 'Hiper'
+    elif atingimento >= 1.3:
         return 'Super'
     elif atingimento >= 1.0:
         return 'Meta'

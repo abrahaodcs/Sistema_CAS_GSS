@@ -1,136 +1,186 @@
 # calculadora_gerente.py
 
-from flask import Blueprint, render_template, request
 
+from flask import Blueprint, render_template, request
 calculadora_gerente_bp = Blueprint('calculadora_gerente', __name__)
 
 @calculadora_gerente_bp.route('/calculadora_gerente', methods=['GET', 'POST'])
-def calculadora_gerente():
+def calcular_bonificacao():
     if request.method == 'POST':
-        # Obter os valores dos campos preenchidos pelo usuário
-        meta_loja_dezena_1 = float(request.form.get('meta_loja_dezena_1', 0))
-        venda_loja_dezena_1 = float(request.form.get('venda_loja_dezena_1', 0))
-        meta_loja_dezena_2 = float(request.form.get('meta_loja_dezena_2', 0))
-        venda_loja_dezena_2 = float(request.form.get('venda_loja_dezena_2', 0))
-        meta_loja_dezena_3 = float(request.form.get('meta_loja_dezena_3', 0))
-        venda_loja_dezena_3 = float(request.form.get('venda_loja_dezena_3', 0))
-        meta_individual_dezena_1 = float(request.form.get('meta_individual_dezena_1', 0))
-        venda_individual_dezena_1 = float(request.form.get('venda_individual_dezena_1', 0))
-        meta_individual_dezena_2 = float(request.form.get('meta_individual_dezena_2', 0))
-        venda_individual_dezena_2 = float(request.form.get('venda_individual_dezena_2', 0))
-        meta_individual_dezena_3 = float(request.form.get('meta_individual_dezena_3', 0))
-        venda_individual_dezena_3 = float(request.form.get('venda_individual_dezena_3', 0))
-        nps = int(request.form.get('nps', 0))
+        meta_loja_dezena1 = float(request.form['meta_loja_dezena1'].replace('R$', '').replace(',', '.'))
+        meta_loja_dezena2 = float(request.form['meta_loja_dezena2'].replace('R$', '').replace(',', '.'))
+        meta_loja_dezena3 = float(request.form['meta_loja_dezena3'].replace('R$', '').replace(',', '.'))
+        total_meta_loja = meta_loja_dezena1 + meta_loja_dezena2 + meta_loja_dezena3
 
-        # Cálculos dos campos
-        meta_mes_loja = meta_loja_dezena_1 + meta_loja_dezena_2 + meta_loja_dezena_3
-        venda_mes_loja = venda_loja_dezena_1 + venda_loja_dezena_2 + venda_loja_dezena_3
-        percentual_meta_mes_loja = (venda_mes_loja / meta_mes_loja) * 100 if meta_mes_loja > 0 else 0
+        meta_individual_dezena1 = float(request.form['meta_individual_dezena1'].replace('R$', '').replace(',', '.'))
+        meta_individual_dezena2 = float(request.form['meta_individual_dezena2'].replace('R$', '').replace(',', '.'))
+        meta_individual_dezena3 = float(request.form['meta_individual_dezena3'].replace('R$', '').replace(',', '.'))
+        total_meta_individual = meta_individual_dezena1 + meta_individual_dezena2 + meta_individual_dezena3
 
-        meta_mes_individual = meta_individual_dezena_1 + meta_individual_dezena_2 + meta_individual_dezena_3
-        venda_mes_individual = venda_individual_dezena_1 + venda_individual_dezena_2 + venda_individual_dezena_3
-        percentual_meta_mes_individual = (venda_mes_individual / meta_mes_individual) * 100 if meta_mes_individual > 0 else 0
+        venda_loja_dezena1 = float(request.form['venda_loja_dezena1'].replace('R$', '').replace(',', '.'))
+        venda_loja_dezena2 = float(request.form['venda_loja_dezena2'].replace('R$', '').replace(',', '.'))
+        venda_loja_dezena3 = float(request.form['venda_loja_dezena3'].replace('R$', '').replace(',', '.'))
+        total_venda_loja = venda_loja_dezena1 + venda_loja_dezena2 + venda_loja_dezena3
 
-        status_loja_dezena_1 = calcular_status(percentual_meta_mes_loja)
-        status_individual_dezena_1 = calcular_status(percentual_meta_mes_individual)
-        rv_dezena_individual_1 = calcular_rv_dezena(venda_individual_dezena_1, percentual_meta_mes_loja, status_individual_dezena_1)
-        rv_dezena_loja_1 = calcular_rv_dezena(venda_loja_dezena_1, percentual_meta_mes_individual, status_loja_dezena_1)
+        venda_individual_dezena1 = float(request.form['venda_individual_dezena1'].replace('R$', '').replace(',', '.'))
+        venda_individual_dezena2 = float(request.form['venda_individual_dezena2'].replace('R$', '').replace(',', '.'))
+        venda_individual_dezena3 = float(request.form['venda_individual_dezena3'].replace('R$', '').replace(',', '.'))
+        total_venda_individual = venda_individual_dezena1 + venda_individual_dezena2 + venda_individual_dezena3
 
-        status_loja_dezena_2 = calcular_status(percentual_meta_mes_loja)
-        status_individual_dezena_2 = calcular_status(percentual_meta_mes_individual)
-        rv_dezena_individual_2 = calcular_rv_dezena(venda_individual_dezena_2, percentual_meta_mes_loja, status_individual_dezena_2)
-        rv_dezena_loja_2 = calcular_rv_dezena(venda_loja_dezena_2, percentual_meta_mes_individual, status_loja_dezena_2)
+        atingimento_meta_loja1 = venda_loja_dezena1 / meta_loja_dezena1 if meta_loja_dezena1 != 0 else 0
+        atingimento_meta_loja2 = venda_loja_dezena2 / meta_loja_dezena2 if meta_loja_dezena2 != 0 else 0
+        atingimento_meta_loja3 = venda_loja_dezena3 / meta_loja_dezena3 if meta_loja_dezena3 != 0 else 0
+        atingimento_meta_loja_mes = total_venda_loja / total_meta_loja if total_meta_loja != 0 else 0
 
-        status_loja_dezena_3 = calcular_status(percentual_meta_mes_loja)
-        status_individual_dezena_3 = calcular_status(percentual_meta_mes_individual)
-        rv_dezena_individual_3 = calcular_rv_dezena(venda_individual_dezena_3, percentual_meta_mes_loja, status_individual_dezena_3)
-        rv_dezena_loja_3 = calcular_rv_dezena(venda_loja_dezena_3, percentual_meta_mes_individual, status_loja_dezena_3)
+        atingimento_meta_individual1 = venda_individual_dezena1 / meta_individual_dezena1 if meta_individual_dezena1 != 0 else 0
+        atingimento_meta_individual2 = venda_individual_dezena2 / meta_individual_dezena2 if meta_individual_dezena2 != 0 else 0
+        atingimento_meta_individual3 = venda_individual_dezena3 / meta_individual_dezena3 if meta_individual_dezena3 != 0 else 0
+        atingimento_meta_individual_mes = total_venda_individual / total_meta_individual if total_meta_individual != 0 else 0
 
-        status_loja_mes = calcular_status(percentual_meta_mes_loja)
-        status_individual_mes = calcular_status(percentual_meta_mes_individual)
-        rv_nps = calcular_rv_nps(nps, percentual_meta_mes_individual)
+        status_loja1 = calcular_status_loja(atingimento_meta_loja1)
+        status_loja2 = calcular_status_loja(atingimento_meta_loja2)
+        status_loja3 = calcular_status_loja(atingimento_meta_loja3)
+        status_loja_mes = calcular_status_loja(atingimento_meta_loja_mes)
 
-        rv_sem_acelerador = (
-            rv_dezena_individual_1 + rv_dezena_individual_2 + rv_dezena_individual_3 +
-            rv_dezena_loja_1 + rv_dezena_loja_2 + rv_dezena_loja_3 + rv_nps
-        )
+        status_individual1 = calcular_status_individual(atingimento_meta_individual1)
+        status_individual2 = calcular_status_individual(atingimento_meta_individual2)
+        status_individual3 = calcular_status_individual(atingimento_meta_individual3)
+        status_individual_mes = calcular_status_individual(atingimento_meta_individual_mes)
 
-        total_rv = calcular_total_rv(percentual_meta_mes_individual, rv_sem_acelerador)
+        bonificacao_individual1 = calcular_bonificacao_percentual_individual(atingimento_meta_individual1)
+        bonificacao_individual2 = calcular_bonificacao_percentual_individual(atingimento_meta_individual2)
+        bonificacao_individual3 = calcular_bonificacao_percentual_individual(atingimento_meta_individual3)
 
-        # Renderização do template com os resultados
-        return render_template(
-            'calculadora_gerente.html',
-            meta_loja_dezena_1=meta_loja_dezena_1,
-            venda_loja_dezena_1=venda_loja_dezena_1,
-            meta_loja_dezena_2=meta_loja_dezena_2,
-            venda_loja_dezena_2=venda_loja_dezena_2,
-            meta_loja_dezena_3=meta_loja_dezena_3,
-            venda_loja_dezena_3=venda_loja_dezena_3,
-            meta_individual_dezena_1=meta_individual_dezena_1,
-            venda_individual_dezena_1=venda_individual_dezena_1,
-            meta_individual_dezena_2=meta_individual_dezena_2,
-            venda_individual_dezena_2=venda_individual_dezena_2,
-            meta_individual_dezena_3=meta_individual_dezena_3,
-            venda_individual_dezena_3=venda_individual_dezena_3,
-            nps=nps,
-            meta_mes_loja=meta_mes_loja,
-            venda_mes_loja=venda_mes_loja,
-            percentual_meta_mes_loja=percentual_meta_mes_loja,
-            meta_mes_individual=meta_mes_individual,
-            venda_mes_individual=venda_mes_individual,
-            percentual_meta_mes_individual=percentual_meta_mes_individual,
-            status_loja_dezena_1=status_loja_dezena_1,
-            status_individual_dezena_1=status_individual_dezena_1,
-            rv_dezena_individual_1=rv_dezena_individual_1,
-            rv_dezena_loja_1=rv_dezena_loja_1,
-            status_loja_dezena_2=status_loja_dezena_2,
-            status_individual_dezena_2=status_individual_dezena_2,
-            rv_dezena_individual_2=rv_dezena_individual_2,
-            rv_dezena_loja_2=rv_dezena_loja_2,
-            status_loja_dezena_3=status_loja_dezena_3,
-            status_individual_dezena_3=status_individual_dezena_3,
-            rv_dezena_individual_3=rv_dezena_individual_3,
-            rv_dezena_loja_3=rv_dezena_loja_3,
-            status_loja_mes=status_loja_mes,
-            status_individual_mes=status_individual_mes,
-            rv_nps=rv_nps,
-            rv_sem_acelerador=rv_sem_acelerador,
-            total_rv=total_rv
-        )
+        bonificacao_loja1 = calcular_bonificacao_percentual_loja(atingimento_meta_loja1)
+        bonificacao_loja2 = calcular_bonificacao_percentual_loja(atingimento_meta_loja2)
+        bonificacao_loja3 = calcular_bonificacao_percentual_loja(atingimento_meta_loja3)
 
-    # Renderização do template da calculadora para o método GET
+        rv1_individual = venda_individual_dezena1 * bonificacao_individual1 if atingimento_meta_loja1 >= 1.0 else 0
+        rv2_individual = venda_individual_dezena2 * bonificacao_individual2 if atingimento_meta_loja2 >= 1.0 else 0
+        rv3_individual = venda_individual_dezena3 * bonificacao_individual3 if atingimento_meta_loja3 >= 1.0 else 0
+
+        rv1_loja = venda_loja_dezena1 * bonificacao_loja1 if atingimento_meta_individual1 >= 1.0 else 0
+        rv2_loja = venda_loja_dezena2 * bonificacao_loja2 if atingimento_meta_individual2 >= 1.0 else 0
+        rv3_loja = venda_loja_dezena3 * bonificacao_loja3 if atingimento_meta_individual3 >= 1.0 else 0
+
+        nps = int(request.form['nps'])
+        rv_nps = calcular_rv_nps(nps, atingimento_meta_loja_mes)
+
+        rv_sem_acelerador = rv1_individual + rv2_individual + rv3_individual + rv1_loja + rv2_loja + rv3_loja + rv_nps
+
+        acelerador = calcular_acelerador(atingimento_meta_loja_mes)
+
+        rv_total = (rv_sem_acelerador * acelerador) + rv_sem_acelerador
+
+        return render_template('calculadora_gerente.html',
+                                meta_loja_dezena1=format_money(meta_loja_dezena1),
+                                meta_loja_dezena2=format_money(meta_loja_dezena2),
+                                meta_loja_dezena3=format_money(meta_loja_dezena3),
+                                total_meta_loja=format_money(total_meta_loja),
+                                meta_individual_dezena1=format_money(meta_individual_dezena1),
+                                meta_individual_dezena2=format_money(meta_individual_dezena2),
+                                meta_individual_dezena3=format_money(meta_individual_dezena3),
+                                total_meta_individual=format_money(total_meta_individual),
+                                venda_loja_dezena1=format_money(venda_loja_dezena1),
+                                venda_loja_dezena2=format_money(venda_loja_dezena2),
+                                venda_loja_dezena3=format_money(venda_loja_dezena3),
+                                total_venda_loja=format_money(total_venda_loja),
+                                venda_individual_dezena1=format_money(venda_individual_dezena1),
+                                venda_individual_dezena2=format_money(venda_individual_dezena2),
+                                venda_individual_dezena3=format_money(venda_individual_dezena3),
+                                total_venda_individual=format_money(total_venda_individual),
+                                atingimento_meta_loja1=format_percent(atingimento_meta_loja1),
+                                atingimento_meta_loja2=format_percent(atingimento_meta_loja2),
+                                atingimento_meta_loja3=format_percent(atingimento_meta_loja3),
+                                atingimento_meta_loja_mes=format_percent(atingimento_meta_loja_mes),
+                                atingimento_meta_individual1=format_percent(atingimento_meta_individual1),
+                                atingimento_meta_individual2=format_percent(atingimento_meta_individual2),
+                                atingimento_meta_individual3=format_percent(atingimento_meta_individual3),
+                                atingimento_meta_individual_mes=format_percent(atingimento_meta_individual_mes),
+                                status_loja1=status_loja1,
+                                status_loja2=status_loja2,
+                                status_loja3=status_loja3,
+                                status_loja_mes=status_loja_mes,
+                                status_individual1=status_individual1,
+                                status_individual2=status_individual2,
+                                status_individual3=status_individual3,
+                                status_individual_mes=status_individual_mes,
+                                bonificacao_individual1=format_percent(bonificacao_individual1),
+                                bonificacao_individual2=format_percent(bonificacao_individual2),
+                                bonificacao_individual3=format_percent(bonificacao_individual3),
+                                bonificacao_loja1=format_percent(bonificacao_loja1),
+                                bonificacao_loja2=format_percent(bonificacao_loja2),
+                                bonificacao_loja3=format_percent(bonificacao_loja3),
+                                rv_individual=format_money(rv1_individual),
+                                rv2_individual=format_money(rv2_individual),
+                                rv3_individual=format_money(rv3_individual),
+                                rv1_loja=format_money(rv1_loja),
+                                rv2_loja=format_money(rv2_loja),
+                                rv3_loja=format_money(rv3_loja),
+                                nps=nps,
+                                rv_nps=format_money(rv_nps),
+                                rv_sem_acelerador=format_money(rv_sem_acelerador),
+                                acelerador=format_percent(acelerador),
+                                rv_total=format_money(rv_total)
+                            )
     return render_template('calculadora_gerente.html')
 
-# Função para calcular o status com base no percentual de meta alcançado
-def calcular_status(percentual_meta):
-    if percentual_meta >= 100:
-        return 'Atingido'
-    elif percentual_meta >= 75:
-        return 'Parcial'
-    else:
-        return 'Não Atingido'
+def format_money(value):
+    return f'R$ {value:.2f}'
 
-# Função para calcular o RV de uma dezena com base nas vendas, percentual de meta alcançado e status
-def calcular_rv_dezena(vendas, percentual_meta, status):
-    if status == 'Atingido':
-        return vendas * 0.1
-    elif status == 'Parcial':
-        return vendas * 0.05
+def format_percent(value):
+    return f'{value:.2%}'
+
+def calcular_status_loja(atingimento):
+    if atingimento >= 1.44:
+        return 'Hiper'
+    elif atingimento >= 1.2:
+        return 'Super'
+    elif atingimento >= 1.0:
+        return 'Meta'
+    else:
+        return 'Na'
+
+def calcular_status_individual(atingimento):
+    if atingimento >= 1.55:
+        return 'Hiper'
+    elif atingimento >= 1.3:
+        return 'Super'
+    elif atingimento >= 1.0:
+        return 'Meta'
+    else:
+        return 'Na'
+def calcular_bonificacao_percentual_individual(atingimento):
+    if atingimento >= 1.55:
+        return 0.025
+    elif atingimento >= 1.3:
+        return 0.015
+    elif atingimento >= 1.0:
+        return 0.01
     else:
         return 0
 
-# Função para calcular o RV do NPS com base no valor do NPS e percentual de meta alcançado
-def calcular_rv_nps(nps, percentual_meta):
-    if percentual_meta >= 100:
-        if nps >= 75:
-            return 100
-        elif nps >= 50:
-            return 50
-    return 0
-
-# Função para calcular o RV total considerando o percentual de meta e o RV sem acelerador
-def calcular_total_rv(percentual_meta, rv_sem_acelerador):
-    if percentual_meta >= 100:
-        return rv_sem_acelerador * 1.5
+def calcular_bonificacao_percentual_loja(atingimento):
+    if atingimento >= 1.44:
+        return 0.01
+    elif atingimento >= 1.3:
+        return 0.0075
+    elif atingimento >= 1.0:
+        return 0.005
     else:
-        return rv_sem_acelerador
+        return 0
+def calcular_rv_nps(nps, atingimento_meta_loja_mes):
+    if nps >= 85 and atingimento_meta_loja_mes >= 1.0:
+        return 300
+    else:
+        return 0
+
+def calcular_acelerador(atingimento_meta_loja_mes):
+    if atingimento_meta_loja_mes >= 1.44:
+        return 0.6
+    elif atingimento_meta_loja_mes >= 1.2:
+        return 0.45
+    elif atingimento_meta_loja_mes >= 1.0:
+        return 0.3
+    else:
+        return 0
