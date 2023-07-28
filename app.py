@@ -1,7 +1,8 @@
 # app.py
 
-from flask import Flask, g
 import mysql.connector
+from flask import Flask, g
+from gunicorn.app.wsgiapp import WSGIApplication
 
 app = Flask(__name__)
 with open('app.secret_key.txt', 'r') as f:
@@ -86,4 +87,4 @@ app.register_blueprint(metas_bonificacoes_bp)
 
 # Execução do aplicativo Flask
 if __name__ == '__main__':
-    app.run(debug=True)
+    WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]").run()
