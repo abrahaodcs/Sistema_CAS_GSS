@@ -141,12 +141,12 @@ def calcular_rv_nps(nps, atingimento_meta_loja_mes):
     else:
         return 0
 
-def calcular_acelerador(atingimento_meta_individual_mes):
-    if atingimento_meta_individual_mes >= 1.44:
+def calcular_acelerador(atingimento_meta_loja_mes):
+    if atingimento_meta_loja_mes >= 1.44:
         return 0.6
-    elif atingimento_meta_individual_mes >= 1.2:
+    elif atingimento_meta_loja_mes >= 1.2:
         return 0.45
-    elif atingimento_meta_individual_mes >= 1.0:
+    elif atingimento_meta_loja_mes >= 1.0:
         return 0.3
     else:
         return 0
