@@ -2,10 +2,10 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, session, send_file
 import datetime
-from reportlab.pdfgen import canvas
 from io import BytesIO
 from decimal import Decimal
 from routes.base import get_db_connection
+from fpdf import FPDF
 
 caixa_bp = Blueprint('caixa', __name__)
 
