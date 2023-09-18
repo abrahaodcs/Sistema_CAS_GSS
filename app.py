@@ -10,10 +10,10 @@ with open('app.secret_key.txt', 'r') as f:
 
 # Configurações do banco de dados
 db_config = {
-    'host': 'br980.hostgator.com.br',
-    'user': 'espa8312_abrahao',
+    'host': 'localhost',
+    'user': 'root',
     'password': 'Hinata@82',
-    'database': 'espa8312_cantana'
+    'database': 'gss'
 }
 
 # Função para obter a conexão com o banco de dados
