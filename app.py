@@ -5,6 +5,9 @@ from flask import Flask, g
 # from gunicorn.app.wsgiapp import WSGIApplication
 
 app = Flask(__name__)
+app.config['STATIC_FOLDER'] = 'static'
+app.config['MEDIA_FOLDER'] = 'media'
+
 with open('app.secret_key.txt', 'r') as f:
     app.secret_key = f.read().strip()
 
