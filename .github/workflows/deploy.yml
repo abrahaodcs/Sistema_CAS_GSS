@@ -16,5 +16,4 @@ jobs:
           ssh root@149.100.154.26 'cd /root/casgss/'
         env:
           SSH_PRIVATE_KEY: ${{ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCe5Wmeb6QvFNF8er/gIz/In2DutV8To7Yk/HAhqVnygfGOGHMVwCuMyvU2WgrZZ8ixFEegfUPWy4JCbdRjqb4i3c2dMLez0sQwIhXQ1MY/tvMSWyufY5p09jJ5hYJzUXzLvGv+wo9CoYwtSWka1P+gHnH/02W+ntp1WtmLRb6ybwcZUM9VGicq+vEOrhxRzcisv4ags8msXkB41GiHz0FZ3Y7qe16tmRmQ0uKdO05Ldwi19WP2U1HbDGPC9zV9i+I+hCTywYF6F08EZJMtC2pv4HeQed7WPmI3YzfX0bC5sTLbeU8yO4mESOz5Nzcis4tmDg4aflP8Kzi7vZVezsOWglzB4U/4C6QFJXGG4FEyKAAqoPf+B7KdnhNhaTj4GKpHdLFp83rzE6Z6Z97gldTNc8GIBob5aF4UMRFbqDscCmtttC3Ey4qN3rm4Bf5583KhdpFPFpvkhdjojprXttYUaCbRzRqu5yopbDO7gLF2W/NBXNt1dl0og370M38y8cWEB6F6grFDDZQn/WZzmF8S/9Aek2JnSaisloHvvtLNoxDQp1Wi8Y2P04MlWEh3+TVslnHhLUDE0flIzDX0FjijccU9dZvRxcD4ZKTlggyKjAhID5Zu9AntdbdiyYnCsr65VA3CRTJlmRpUZVZ6tRVLa9rv/fnp8L+mAnf5ak1uAQ== abrahaodcs@gmail.com
-root@srv419536:~#
 }}
